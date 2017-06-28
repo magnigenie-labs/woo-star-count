@@ -1,2 +1,2 @@
 <?php
-// "Silence is goldens";
+// "Silence is golden";
