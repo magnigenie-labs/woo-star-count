@@ -19,6 +19,7 @@ class wooPsr {
             }
             if ($woospr['cmnt_enabled'] == "yes") {
                 add_action('wp_ajax_comment_helpful', array($this, 'comment_helpful'));
+                add_action('wp_ajax_nopriv_comment_helpful', array($this, 'comment_helpful'));
                 add_action('woocommerce_review_comment_text', array($this, 'woocommerce_review_display_comment_text'), 100);
             }
             if ($woospr['reviews_single_enable'] == "yes") {
@@ -35,7 +36,17 @@ class wooPsr {
         add_action('wp_enqueue_scripts', array($this, 'star_rating_styles_method'));
     }
 
-    //Check if woocommerce is installed and activated
+//--Scripts & stylesheets 
+    public function woopsr_scripts() {
+        wp_enqueue_style('custom-star-rating-css', plugin_dir_url(__FILE__) . 'css/custom-star-rating.css');
+        wp_enqueue_style('custom-animation', plugin_dir_url(__FILE__) . 'css/animated.css');
+        wp_enqueue_style('custom-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+        wp_enqueue_script('custom-star-rating-js', plugin_dir_url(__FILE__) . ('js/custom-star-rating.js'), array('jquery'), '1.0.0', true);
+        wp_enqueue_script('hoverintent-js', plugin_dir_url(__FILE__) . ('js/jquery.hoverIntent.js'), array('jquery'), '1.0.0', true);
+        wp_localize_script('custom-star-rating-js', 'StarCount', array('ajaxUrl' => admin_url('admin-ajax.php')));
+    }
+
+//Check if woocommerce is installed and activated
     public function check_required_plugins() {
         if (!is_plugin_active('woocommerce/woocommerce.php')) {
             ?>
@@ -47,16 +58,6 @@ class wooPsr {
         }
     }
 
-//--Scripts & stylesheets 
-    public function woopsr_scripts() {
-        wp_enqueue_style('custom-star-rating-css', plugin_dir_url(__FILE__) . 'css/custom-star-rating.css');
-        wp_enqueue_style('custom-animation', plugin_dir_url(__FILE__) . 'css/animated.css');
-        wp_enqueue_style('custom-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
-        wp_enqueue_script('custom-star-rating-js', plugin_dir_url(__FILE__) . ('js/custom-star-rating.js'), array('jquery'), '1.0.0', true);
-        wp_enqueue_script('hoverintent-js', plugin_dir_url(__FILE__) . ('js/jquery.hoverIntent.js'), array('jquery'), '1.0.0', true);
-        wp_localize_script('custom-star-rating-js', 'StarCount', array('ajaxUrl' => admin_url('admin-ajax.php')));
-    }
-
 //--Settings link on plugins page
     public function add_action_links($links) {
         array_unshift($links, '<a href="' . admin_url('admin.php?page=wc-settings&tab=woopsr') . '">Settings</a>');
@@ -66,6 +67,10 @@ class wooPsr {
 //--Update like or dislike
     public function comment_helpful() {
         global $wpdb;
+        if (!is_user_logged_in()) {
+            echo json_encode(['status' => "login_issue", 'url' => wp_login_url()]);
+            exit;
+        }
         $comment_id = $_POST['commentId'];
         $cmnt_status = $_POST['commentStatus'];
         $user_id = get_current_user_id();
@@ -80,27 +85,25 @@ class wooPsr {
         global $wpdb;
         $woospr = get_option('woopsr');
         $comment_id = get_comment_ID();
-        $login_status = is_user_logged_in();
-        $login_url = wp_login_url();
         $user_id = get_current_user_id();
 
         $likeCount = $wpdb->get_var("SELECT COUNT(*) meta_value FROM $wpdb->commentmeta WHERE meta_key LIKE '%mg-cmnt-hlp-userid-%' AND meta_value = 1 AND comment_id = $comment_id");
 
         $activeCheck = $wpdb->get_var("SELECT COUNT(*) meta_value FROM $wpdb->commentmeta WHERE meta_key ='mg-cmnt-hlp-userid-$user_id' AND meta_value = 1 AND comment_id = $comment_id");
 
-        $activeCheck2 = $wpdb->get_var("SELECT COUNT(*) meta_value FROM $wpdb->commentmeta WHERE meta_key ='mg-cmnt-hlp-userid-$user_id' AND meta_value = 0 AND comment_id = $comment_id");
+        $inactiveCheck = $wpdb->get_var("SELECT COUNT(*) meta_value FROM $wpdb->commentmeta WHERE meta_key ='mg-cmnt-hlp-userid-$user_id' AND meta_value = 0 AND comment_id = $comment_id");
 
         $class = $class2 = "";
         if ($activeCheck == 1) {
             $class = "mg-active";
         }
-        if ($activeCheck2 == 1) {
+        if ($inactiveCheck == 1) {
             $class2 = "mg-active";
         }
 
         $woo_cmnt_str = str_replace('{count}', "<span class='likeid'>$likeCount</span>", $woospr['woo_cmnt']);
 
-        echo "<div class='cmnt-last'> $woo_cmnt_str <button class='mg-cmnt-like $class' loginUrl='$login_url' type='button' commentId='$comment_id' authcheck='$login_status' value='1'>Yes</button> <button authcheck='$login_status' loginUrl='$login_url' class='mg-cmnt-unlike $class2' commentId='$comment_id' value='0'>No</button></div>";
+        echo "<div class='cmnt-last'> $woo_cmnt_str <button class='mg-cmnt-like $class' type='button' commentId='$comment_id' value='1'>Yes</button> <button class='mg-cmnt-unlike $class2' commentId='$comment_id' value='0'>No</button></div>";
     }
 
 //--Remove the review tab
@@ -145,10 +148,10 @@ class wooPsr {
             $ratedCount = (5 / $rating_count) * 100;
 
             $fifthTitle = round($fifthPercent) != 0 ? round($fifthPercent) . "% of reviews have 5 stars" : "";
-            $fourthTitle = round($fourthPercent) != 0 ? round($fourthPercent) . "% of reviews have 5 stars" : "";
-            $thirdTitle = round($thirdPercent) != 0 ? round($thirdPercent) . "% of reviews have 5 stars" : "";
-            $secondTitle = round($secondPercent) != 0 ? round($secondPercent) . "% of reviews have 5 stars" : "";
-            $firstTitle = round($firstPercent) != 0 ? round($firstPercent) . "% of reviews have 5 stars" : "";
+            $fourthTitle = round($fourthPercent) != 0 ? round($fourthPercent) . "% of reviews have 4 stars" : "";
+            $thirdTitle = round($thirdPercent) != 0 ? round($thirdPercent) . "% of reviews have 3 stars" : "";
+            $secondTitle = round($secondPercent) != 0 ? round($secondPercent) . "% of reviews have 2 stars" : "";
+            $firstTitle = round($firstPercent) != 0 ? round($firstPercent) . "% of reviews have 1 star" : "";
 
             $rating_html = "";
             $rating_html .= '<div id="big-page-wrap" class="big-page-wrap">
