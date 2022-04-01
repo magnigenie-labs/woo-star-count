@@ -3,7 +3,7 @@ jQuery(function ($) {
     $('.star-rating').hoverIntent(function () {
         var thisForm = $(this);
         var dataId = thisForm.parents('li').find('.pid').val();
-        $('.woocommerce-product-rating').find('.star-rating').css('cursor', 'pointer');
+       $('.woocommerce-product-rating').find('.star-rating').css('cursor', 'pointer');
         if (thisForm.parent(".comment-text").length)
             return;
         if (!dataId) {
@@ -25,17 +25,19 @@ jQuery(function ($) {
                 $('.woocommerce-product-rating').find('#page-wrap').css('margin-top', '30px');
                 thisForm.removeClass('loading');
             });
-        }
+        }    
     });
 //--Update like dislike status
     $('.mg-cmnt-like,.mg-cmnt-unlike').click(function () {
         var thisForm = $(this);
         var commentId = $(this).attr('commentId');
+        var authcheck = $(this).attr('authcheck');
+        var loginUrl = $(this).attr('loginUrl');
         var commentStatus = $(this).val();
         var action_data = {commentId: commentId, commentStatus: commentStatus, action: "comment_helpful"};
         $.post(StarCount.ajaxUrl, action_data, function (response) {
-            if (response.status === "login_issue") {
-                window.location.href = response.url;
+            if (authcheck === "") {
+                window.location.href = loginUrl;
                 return false;
             } else {
                 if (commentStatus === '1') {
@@ -47,6 +49,6 @@ jQuery(function ($) {
                 }
                 thisForm.parent().find('.likeid').html(response);
             }
-        }, 'json');
+        });
     });
 });

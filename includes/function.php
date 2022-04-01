@@ -4,7 +4,7 @@ class wooPsr {
 
     protected $option_name = 'woopsr';
 
-//--Hooks     
+    //Add required hooks needed for the plugin.
     public function __construct() {
         $woospr = get_option('woopsr');
         add_filter('woocommerce_get_settings_pages', array($this, 'woopsr_settings_class'));
@@ -19,7 +19,6 @@ class wooPsr {
             }
             if ($woospr['cmnt_enabled'] == "yes") {
                 add_action('wp_ajax_comment_helpful', array($this, 'comment_helpful'));
-                add_action('wp_ajax_nopriv_comment_helpful', array($this, 'comment_helpful'));
                 add_action('woocommerce_review_comment_text', array($this, 'woocommerce_review_display_comment_text'), 100);
             }
             if ($woospr['reviews_single_enable'] == "yes") {
@@ -36,6 +35,18 @@ class wooPsr {
         add_action('wp_enqueue_scripts', array($this, 'star_rating_styles_method'));
     }
 
+    //Check if woocommerce is installed and activated
+    public function check_required_plugins() {
+        if (!is_plugin_active('woocommerce/woocommerce.php')) {
+            ?>
+            <div id="message" class="error">
+                <p>Woo Star Count requires <a href="http://www.woothemes.com/woocommerce/" target="_blank">WooCommerce</a> to be activated in order to work. Please install and activate <a href="<?php echo admin_url('/plugin-install.php?tab=search&amp;type=term&amp;s=WooCommerce'); ?>" target="">WooCommerce</a> first.</p>
+            </div>
+            <?php
+            deactivate_plugins('/woo-star-count/woo-star-count.php');
+        }
+    }
+
 //--Scripts & stylesheets 
     public function woopsr_scripts() {
         wp_enqueue_style('custom-star-rating-css', plugin_dir_url(__FILE__) . 'css/custom-star-rating.css');
@@ -46,31 +57,15 @@ class wooPsr {
         wp_localize_script('custom-star-rating-js', 'StarCount', array('ajaxUrl' => admin_url('admin-ajax.php')));
     }
 
-//Check if woocommerce is installed and activated
-    public function check_required_plugins() {
-        if (!is_plugin_active('woocommerce/woocommerce.php')) {
-            ?>
-            <div id="message" class="error">
-                <p>Woo Star Count requires <a href="http://www.woothemes.com/woocommerce/" target="_blank">WooCommerce</a> to be activated in order to work. Please install and activate <a href="<?php echo admin_url('/plugin-install.php?tab=search&amp;type=term&amp;s=WooCommerce'); ?>" target="">WooCommerce</a> first.</p>
-            </div>
-            <?php
-            deactivate_plugins('/woo-star-count/starcount.php');
-        }
-    }
-
-//--Settings link on plugins page
+    //Settings link on plugins page
     public function add_action_links($links) {
         array_unshift($links, '<a href="' . admin_url('admin.php?page=wc-settings&tab=woopsr') . '">Settings</a>');
         return $links;
     }
 
-//--Update like or dislike
+    //Update like or dislike
     public function comment_helpful() {
         global $wpdb;
-        if (!is_user_logged_in()) {
-            echo json_encode(['status' => "login_issue", 'url' => wp_login_url()]);
-            exit;
-        }
         $comment_id = $_POST['commentId'];
         $cmnt_status = $_POST['commentStatus'];
         $user_id = get_current_user_id();
@@ -80,39 +75,41 @@ class wooPsr {
         exit;
     }
 
-//--Label for like and dislike
+    //Label for like and dislike
     public function woocommerce_review_display_comment_text() {
         global $wpdb;
         $woospr = get_option('woopsr');
         $comment_id = get_comment_ID();
+        $login_status = is_user_logged_in();
+        $login_url = wp_login_url();
         $user_id = get_current_user_id();
 
         $likeCount = $wpdb->get_var("SELECT COUNT(*) meta_value FROM $wpdb->commentmeta WHERE meta_key LIKE '%mg-cmnt-hlp-userid-%' AND meta_value = 1 AND comment_id = $comment_id");
 
         $activeCheck = $wpdb->get_var("SELECT COUNT(*) meta_value FROM $wpdb->commentmeta WHERE meta_key ='mg-cmnt-hlp-userid-$user_id' AND meta_value = 1 AND comment_id = $comment_id");
 
-        $inactiveCheck = $wpdb->get_var("SELECT COUNT(*) meta_value FROM $wpdb->commentmeta WHERE meta_key ='mg-cmnt-hlp-userid-$user_id' AND meta_value = 0 AND comment_id = $comment_id");
+        $activeCheck2 = $wpdb->get_var("SELECT COUNT(*) meta_value FROM $wpdb->commentmeta WHERE meta_key ='mg-cmnt-hlp-userid-$user_id' AND meta_value = 0 AND comment_id = $comment_id");
 
         $class = $class2 = "";
         if ($activeCheck == 1) {
             $class = "mg-active";
         }
-        if ($inactiveCheck == 1) {
+        if ($activeCheck2 == 1) {
             $class2 = "mg-active";
         }
 
         $woo_cmnt_str = str_replace('{count}', "<span class='likeid'>$likeCount</span>", $woospr['woo_cmnt']);
 
-        echo "<div class='cmnt-last'> $woo_cmnt_str <button class='mg-cmnt-like $class' type='button' commentId='$comment_id' value='1'>Yes</button> <button class='mg-cmnt-unlike $class2' commentId='$comment_id' value='0'>No</button></div>";
+        echo "<div class='cmnt-last'> $woo_cmnt_str <button class='mg-cmnt-like $class' loginUrl='$login_url' type='button' commentId='$comment_id' authcheck='$login_status' value='1'>Yes</button> <button authcheck='$login_status' loginUrl='$login_url' class='mg-cmnt-unlike $class2' commentId='$comment_id' value='0'>No</button></div>";
     }
 
-//--Remove the review tab
+    //Remove the review tab
     public function remove_review_tab($tabs) {
         unset($tabs['reviews']);
         return $tabs;
     }
 
-//--Add new tab
+    //Add new tab
     public function woo_new_product_tab($tabs) {
         global $product;
         $reviewCount = $product->get_review_count();
@@ -124,7 +121,7 @@ class wooPsr {
         return $tabs;
     }
 
-//--New tab content
+    //New tab content
     public function woo_new_product_tab_content() {
         global $wpdb;
         global $post;
@@ -148,10 +145,10 @@ class wooPsr {
             $ratedCount = (5 / $rating_count) * 100;
 
             $fifthTitle = round($fifthPercent) != 0 ? round($fifthPercent) . "% of reviews have 5 stars" : "";
-            $fourthTitle = round($fourthPercent) != 0 ? round($fourthPercent) . "% of reviews have 4 stars" : "";
-            $thirdTitle = round($thirdPercent) != 0 ? round($thirdPercent) . "% of reviews have 3 stars" : "";
-            $secondTitle = round($secondPercent) != 0 ? round($secondPercent) . "% of reviews have 2 stars" : "";
-            $firstTitle = round($firstPercent) != 0 ? round($firstPercent) . "% of reviews have 1 star" : "";
+            $fourthTitle = round($fourthPercent) != 0 ? round($fourthPercent) . "% of reviews have 5 stars" : "";
+            $thirdTitle = round($thirdPercent) != 0 ? round($thirdPercent) . "% of reviews have 5 stars" : "";
+            $secondTitle = round($secondPercent) != 0 ? round($secondPercent) . "% of reviews have 5 stars" : "";
+            $firstTitle = round($firstPercent) != 0 ? round($firstPercent) . "% of reviews have 5 stars" : "";
 
             $rating_html = "";
             $rating_html .= '<div id="big-page-wrap" class="big-page-wrap">
@@ -192,19 +189,19 @@ class wooPsr {
         comments_template();
     }
 
-//--Posting id through hidden field
+    //Posting id through hidden field
     public function woo_star_counts() {
         global $post;
         echo '<input type="hidden" class="pid" value="' . $post->ID . '">';
     }
 
-//--Include the class-wc-settings-star-count.php file
+    //Include the class-wc-settings-star-count.php file
     public function woopsr_settings_class($settings) {
         $settings[] = include 'class-wc-settings-star-count.php';
         return $settings;
     }
 
-//--Ajax request for woo-star-count popup
+    //Ajax request for woo-star-count popup
     public function show_all_rating() {
         $woospr = get_option('woopsr');
         global $wpdb;
@@ -265,7 +262,7 @@ class wooPsr {
         exit;
     }
 
-//--frontend style css
+    //frontend style css
     public function star_rating_styles_method() {
         wp_enqueue_style('custom-style', plugin_dir_url(__FILE__) . 'css/custom-star-rating.css');
         $woospr = get_option('woopsr');
