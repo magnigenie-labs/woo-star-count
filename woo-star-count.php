@@ -1,14 +1,16 @@
 <?php
-/*
-  Plugin Name: Review Stars Count For  WooCommerce
-  Plugin URI: https://wordpress.org/plugins/review-stars-count-for-woocommerce
-  Version: 1.0
-  Description: This plugin allows you to easily display review stars count for the products in your store.
-  Author: MagniGenie
-  Author URI: http://magnigenie.com/
-  License: GPLv2 or later
-  License URI: http://www.gnu.org/licenses/gpl-2.0.html
- */
+/**
+ * Plugin Name: Review Stars Count For  WooCommerce
+ * Plugin URI: https://wordpress.org/plugins/review-stars-count-for-woocommerce
+ * Version: 1.1
+ * Description: This plugin allows you to easily display review stars count for the products in your store.
+ * Author: MagniGenie
+ * Author URI: http://magnigenie.com/
+ * Text Domain: woopsr
+ * Domain Path: languages
+ * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.html
+ **/
 
 // No direct file access
 !defined('ABSPATH') AND exit;

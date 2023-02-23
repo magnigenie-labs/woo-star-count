@@ -8,7 +8,8 @@ class wooPsr {
     public function __construct() {
         $woospr = get_option('woopsr');
         add_filter('woocommerce_get_settings_pages', array($this, 'woopsr_settings_class'));
-        if ($woospr['enabled'] == "yes") {
+        if ($woospr['enabled'] == "yes")
+         {
             if ($woospr['single_enable'] == "yes") {
                 add_action('wp_enqueue_scripts', array($this, 'woopsr_scripts'));
                 add_action('woocommerce_single_product_summary', array($this, 'woo_star_counts'));
@@ -47,13 +48,13 @@ class wooPsr {
         }
     }
 
-//--Scripts & stylesheets 
+    //--Scripts & stylesheets 
     public function woopsr_scripts() {
         wp_enqueue_style('custom-star-rating-css', plugin_dir_url(__FILE__) . 'css/custom-star-rating.css');
         wp_enqueue_style('custom-animation', plugin_dir_url(__FILE__) . 'css/animated.css');
         wp_enqueue_style('custom-font-awesome', 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
+        wp_enqueue_script('hover-intent-js', plugin_dir_url(__FILE__) . ('js/hover-intent.js'), array('jquery'), '1.0.0', true);
         wp_enqueue_script('custom-star-rating-js', plugin_dir_url(__FILE__) . ('js/custom-star-rating.js'), array('jquery'), '1.0.0', true);
-        wp_enqueue_script('hoverintent-js', plugin_dir_url(__FILE__) . ('js/jquery.hoverIntent.js'), array('jquery'), '1.0.0', true);
         wp_localize_script('custom-star-rating-js', 'StarCount', array('ajaxUrl' => admin_url('admin-ajax.php')));
     }
 
@@ -152,38 +153,38 @@ class wooPsr {
 
             $rating_html = "";
             $rating_html .= '<div id="big-page-wrap" class="big-page-wrap">
-    <section>
-        <span class="big-wstar-text">Rated  ' . $average . '  out of 5</span>
-    </section>
-    <section>
-        <span class="big-wstar">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-        <div title="' . $fifthTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $fifthPercent . '%"></span></div>
-        <span class="big-wstar-num">' . $allcount[0] . '</span>
-    </section>
-    <section>
-        <span class="big-wstar">&#9733;&#9733;&#9733;&#9733;</span>
-        <div title="' . $fourthTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $fourthPercent . '%"></span></div>
-        <span class="big-wstar-num">' . $allcount[1] . '</span>
-    </section>
-    <section>
-        <span class="big-wstar">&#9733;&#9733;&#9733;</span>
-        <div title="' . $thirdTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $thirdPercent . '%"></span></div>
-        <span class="big-wstar-num">' . $allcount[2] . '</span>
-    </section>
-    <section>
-        <span class="big-wstar">&#9733;&#9733;</span>
-        <div title="' . $secondTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $secondPercent . '%"></span></div>
-        <span class="big-wstar-num">' . $allcount[3] . '</span>
-    </section>
-    <section>
-        <span class="big-wstar">&#9733;</span>
-        <div title="' . $firstTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $firstPercent . '%"></span></div>
-        <span class="big-wstar-num">' . $allcount[4] . '</span>
-    </section>
-    <section>
-        <span class="big-wstar-review"><a class="woocommerce-review-link" href="' . $link . '#reviews" rel="nofollow">See all ' . $rating_count . ' reviews</a></span>
-    </section>
-</div>';
+                            <section>
+                                <span class="big-wstar-text">Rated  ' . $average . '  out of 5</span>
+                            </section>
+                            <section>
+                                <span class="big-wstar">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                <div title="' . $fifthTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $fifthPercent . '%"></span></div>
+                                <span class="big-wstar-num">' . $allcount[0] . '</span>
+                            </section>
+                            <section>
+                                <span class="big-wstar">&#9733;&#9733;&#9733;&#9733;</span>
+                                <div title="' . $fourthTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $fourthPercent . '%"></span></div>
+                                <span class="big-wstar-num">' . $allcount[1] . '</span>
+                            </section>
+                            <section>
+                                <span class="big-wstar">&#9733;&#9733;&#9733;</span>
+                                <div title="' . $thirdTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $thirdPercent . '%"></span></div>
+                                <span class="big-wstar-num">' . $allcount[2] . '</span>
+                            </section>
+                            <section>
+                                <span class="big-wstar">&#9733;&#9733;</span>
+                                <div title="' . $secondTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $secondPercent . '%"></span></div>
+                                <span class="big-wstar-num">' . $allcount[3] . '</span>
+                            </section>
+                            <section>
+                                <span class="big-wstar">&#9733;</span>
+                                <div title="' . $firstTitle . '" class="big-wstar-progress-bar"><span style="width: ' . $firstPercent . '%"></span></div>
+                                <span class="big-wstar-num">' . $allcount[4] . '</span>
+                            </section>
+                            <section>
+                                <span class="big-wstar-review"><a class="woocommerce-review-link" href="' . $link . '#reviews" rel="nofollow">See all ' . $rating_count . ' reviews</a></span>
+                            </section>
+                            </div>';
             echo $rating_html;
         }
         comments_template();
@@ -256,7 +257,7 @@ class wooPsr {
                             <section>
                                 <span class="wstar-review"><a class="woocommerce-review-link" href="' . $link . '#reviews" rel="nofollow">See all ' . $rating_count . ' reviews</a></span>
                             </section>
-</div>';
+                            </div>';
             echo $rating_html;
         }
         exit;
@@ -298,10 +299,9 @@ class wooPsr {
                         background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, {$reviewsfirstcolor}), color-stop(1, {$secondcolor}));
                         background-image: -webkit-linear-gradient({$reviewsfirstcolor},{$reviewssecondcolor});
                         }.mg-cmnt-like,.mg-cmnt-unlike{font-size: {$wooBtnFont}px !important; color:{$wooBtnClr}; background-color: {$wooBtnBgCol};}.mg-active{ background-color:{$wooBtnActiveCol}}#big-page-wrap{width:{$wooBoxWidth}%
-};
-}";
+                            };
+                        }";
         wp_add_inline_style('custom-style', $custom_css);
     }
-
 }
 ?>

@@ -1,6 +1,6 @@
 jQuery(function ($) {
 //--woo star popup
-    $('.star-rating').hover(function () {
+    $(".star-rating").hoverIntent (function () {
         var thisForm = $(this);
         var dataId = thisForm.parents('li').find('.pid').val();
        $('.woocommerce-product-rating').find('.star-rating').css('cursor', 'pointer');

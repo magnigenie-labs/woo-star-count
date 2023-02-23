@@ -1,0 +1,177 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Review Stars Count For  WooCommerce\n"
+"POT-Creation-Date: 2023-02-08 19:53+0530\n"
+"PO-Revision-Date: 2023-02-08 19:53+0530\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 3.2.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: woo-star-count.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+
+#: includes/class-wc-settings-star-count.php:23
+msgid "Woo Star Count"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:43
+msgid "Woo Star Count Settings"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:45
+msgid "Woo Star Count Plugin Enable"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:46
+msgid "Enable Woo star count"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:52
+msgid "Enable Popup For Product Single Page"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:53
+#: includes/class-wc-settings-star-count.php:112
+msgid "Enable For Single Product Page"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:59
+msgid "Enable Popup For Product Archive Page"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:60
+msgid "Enable For Product Archive Page"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:66
+msgid "Popup Background Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:73
+msgid "Popup Text color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:80
+msgid "Popup Progress Bar Primary Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:87
+msgid "Popup Progress Bar Secondary Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:94
+msgid "Popup See All Reviews Hover Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:101
+msgid "Popup Animation"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:109
+msgid "Woo Star Count Settings (Reviews Tab)"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:111
+msgid "Enable For Product Single Page(Reviews Tab)"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:118
+msgid "Review Box Width"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:119
+msgid "%"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:127
+msgid "Progress Bar Primary Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:134
+msgid "Progress Bar Secondary Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:141
+msgid "Woo Star Count Settings (Comment Section)"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:143
+msgid "Enable Comment Section"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:144
+msgid "Enable comment helpful section"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:150
+msgid "Comment text"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:151
+msgid "*Remarks : {count} keyword showing number of people helpful for review"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:158
+msgid "Button Background Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:159
+msgid "Yes and No button background color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:166
+msgid "Button Active Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:167
+msgid "Yes and No button active color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:174
+msgid "Button Text Font Size"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:175
+msgid "px"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:183
+msgid "Button Text Color"
+msgstr ""
+
+#: includes/class-wc-settings-star-count.php:184
+msgid "Yes and No button text color"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "Review Stars Count For  WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://wordpress.org/plugins/review-stars-count-for-woocommerce"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"This plugin allows you to easily display review stars count for the products "
+"in your store."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "MagniGenie"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://magnigenie.com/"
+msgstr ""

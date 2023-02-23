@@ -4,8 +4,8 @@ Tags: woocommerce,woocommerce addon,reviews, woocommerce reivew,review stars, wo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=sales@magnigenie.com&item_name=Review%20Stars%20Count%20For%20WooCommerce&return=http://magnigenie.com
 Requires at least: 4.0
 Requires PHP: 5.2
-Tested up to: 5.5.1
-Stable tag: 1.0
+Tested up to: 6.1.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html 
 
@@ -36,9 +36,15 @@ We all like to know more insights about the products before we actually purchase
 8. Comment section settings.
 
 == Changelog ==
+
+= 1.1 =
+* Fixed: Hover intent issue
+* Update: Option default value
+* Code cleanup
+
 = 1.0 =
 * Initial release.
 
 == Upgrade Notice ==
-= 1.0 =
+= 1.1 =
 This is first version of our plugin. We will notify you when there is a update available.

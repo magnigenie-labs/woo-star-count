@@ -5,7 +5,7 @@
  *
  * @author 	MagniGenie
  * @category 	Admin
- * @version     1.0
+ * @version     1.1
  */
 if (!defined('ABSPATH'))
     exit; // Exit if accessed directly
@@ -64,7 +64,6 @@ if (class_exists('WC_Settings_Page')) :
                 ),
                 array(
                     'title' => __('Popup Background Color', 'woopsr'),
-                    'desc' => __('', 'woopsr'),
                     'id' => 'woopsr[bg_color]',
                     'type' => 'color',
                     'css' => 'width: 125px;',
@@ -72,7 +71,6 @@ if (class_exists('WC_Settings_Page')) :
                 ),
                 array(
                     'title' => __('Popup Text color', 'woopsr'),
-                    'desc' => __('', 'woopsr'),
                     'id' => 'woopsr[text_color]',
                     'type' => 'color',
                     'css' => 'width: 125px;',
@@ -80,7 +78,6 @@ if (class_exists('WC_Settings_Page')) :
                 ),
                 array(
                     'title' => __('Popup Progress Bar Primary Color', 'woopsr'),
-                    'desc' => __('', 'woopsr'),
                     'id' => 'woopsr[first_color]',
                     'type' => 'color',
                     'css' => 'width: 125px;',
@@ -88,7 +85,6 @@ if (class_exists('WC_Settings_Page')) :
                 ),
                 array(
                     'title' => __('Popup Progress Bar Secondary Color', 'woopsr'),
-                    'desc' => __('', 'woopsr'),
                     'id' => 'woopsr[sec_color]',
                     'type' => 'color',
                     'css' => 'width: 125px;',
@@ -96,7 +92,6 @@ if (class_exists('WC_Settings_Page')) :
                 ),
                 array(
                     'title' => __('Popup See All Reviews Hover Color', 'woopsr'),
-                    'desc' => __('', 'woopsr'),
                     'id' => 'woopsr[hover_color]',
                     'type' => 'color',
                     'css' => 'width: 125px;',
@@ -104,7 +99,6 @@ if (class_exists('WC_Settings_Page')) :
                 ),
                 array(
                     'title' => __('Popup Animation', 'woopsr'),
-                    'desc' => __('', 'woopsr'),
                     'id' => 'woopsr[popup_animation]',
                     'type' => 'select',
                     'options' => $animateClass,
@@ -125,13 +119,12 @@ if (class_exists('WC_Settings_Page')) :
                     'desc' => __('%', 'woopsr'),
                     'type' => 'number',
                     'id' => 'woopsr[review_box_width]',
-                    'default' => '1',
+                    'default' => '50',
                     'custom_attributes' => array('min' => '1', 'step' => '1'),
                     'css' => 'width: 150px;'
                 ),
                 array(
                     'title' => __('Progress Bar Primary Color', 'woopsr'),
-                    'desc' => __('', 'woopsr'),
                     'id' => 'woopsr[reviews_first_color]',
                     'type' => 'color',
                     'css' => 'width: 125px;',
@@ -139,7 +132,6 @@ if (class_exists('WC_Settings_Page')) :
                 ),
                 array(
                     'title' => __('Progress Bar Secondary Color', 'woopsr'),
-                    'desc' => __('', 'woopsr'),
                     'id' => 'woopsr[reviews_sec_color]',
                     'type' => 'color',
                     'css' => 'width: 125px;',
@@ -183,7 +175,7 @@ if (class_exists('WC_Settings_Page')) :
                     'desc' => __('px', 'woopsr'),
                     'type' => 'number',
                     'id' => 'woopsr[btn_font_size]',
-                    'default' => '1',
+                    'default' => '10',
                     'custom_attributes' => array('min' => '1', 'step' => '1'),
                     'css' => 'width: 150px;'
                 ),
